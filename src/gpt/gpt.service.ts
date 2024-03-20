@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { orthographyCheckUseCase, prosConsDicusserUseCase, textToAudioGetterUseCase, textToAudioUseCase, translateUseCase } from './use-cases';
-import { ProsConsDiscusserDto, orthographyDto, textToAudioDto, translateDto } from './dtos';
+import { audioToTextUseCase, orthographyCheckUseCase, prosConsDicusserUseCase, textToAudioGetterUseCase, textToAudioUseCase, translateUseCase } from './use-cases';
+import { ProsConsDiscusserDto, audioToTextDto, orthographyDto, textToAudioDto, translateDto } from './dtos';
 import OpenAI from 'openai';
 
 @Injectable()
@@ -24,5 +24,8 @@ textToAudio = async(dto: textToAudioDto) => {
 }
 textToAudioGetter = async(id: string) => {
    return await textToAudioGetterUseCase({id})
+}
+audioToText = async(audio: Express.Multer.File,dto: audioToTextDto)=> {
+    return await audioToTextUseCase(this.openai,{audio: audio, prompt: dto.prompt})
 }
 }
